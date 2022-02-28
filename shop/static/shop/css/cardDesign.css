@@ -1,0 +1,118 @@
+
+/* プロダクトカード */
+div.items{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.card_link{
+    width: auto;
+    height: 320px;
+    display: flex;
+}
+figure{
+    position: relative;
+}
+.card_img{
+    width: 320px;
+    height: 320px;
+    object-fit: cover;
+}
+/* 値段 */
+.card_price{
+    position: absolute;
+    display: inline;
+    padding: 5px 10px 5px 10px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 2;
+    position: absolute;
+    top:289px;
+    right:220px;
+    width: 100px;
+    text-align: center;
+    margin: 0;
+}
+/* 販売状態 */
+.card_status{
+    position: absolute;
+    display: inline;
+    padding: 5px 10px 5px 10px;
+    color: white;
+    background-color: rgba(255, 0, 0, 1);
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 2;
+    position: absolute;
+    top:8px;
+    right:14px;
+    width: 100px;
+    text-align: center;
+    margin: 0;
+}
+/* スマホ表示時 */
+@media (max-width: 1200px)
+{
+    .card_link{
+        width: auto;
+        height: 240px;
+        display: flex;
+    }
+    figure{
+        position: relative;
+    }
+    .card_img{
+        width: 240px;
+        height: 240px;
+        object-fit: cover;
+    }
+    .card_price{
+        top:209px;
+        right:140px;
+    }
+}
+
+@media (max-width: 992px)
+{
+    .card_link{
+        width: auto;
+        height: 180px;
+        display: flex;
+    }
+    figure{
+        position: relative;
+    }
+    .card_img{
+        width: 180px;
+        height: 180px;
+        object-fit: cover;
+    }
+    .card_price{
+        top:149px;
+        right:80px;
+    }
+}
+
+@media (max-width: 768px)
+{
+    .card_link{
+        width: auto;
+        height: 140px;
+        display: flex;
+    }
+    figure{
+        position: relative;
+    }
+    .card_img{
+        width: 140px;
+        height: 140px;
+        object-fit: cover;
+    }
+    .card_price{
+        top:109px;
+        right:40px;
+    }
+}

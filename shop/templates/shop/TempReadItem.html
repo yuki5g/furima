@@ -1,0 +1,154 @@
+{% extends "shop/base.html" %}
+{% load bootstrap4 %}
+{% block title %}{{ item.name }} | フリマサイト{% endblock title %}
+{% block content %}
+<!-- 「販売中でない」かつ、ログイン中の利用者が購入者、販売者でない場合、メッセージ表示 -->
+{% if item.listStatus.id == 1 and user != item.buyer and user != item.seller %}
+    <div class="alert alert-danger text-center" role="alert">
+        <strong>SOLD OUT</strong> この商品は売り切れています。
+    </div>
+{% endif %}
+<!-- 取引情報が存在しない場合 -->
+{% if item.transactionStatus.id != 0 %}
+    <!-- ログイン中の利用者が購入者の場合、メッセージ表示、取引画面遷移ボタン表示 -->
+    {% if user == item.buyer %}
+    <div class="alert alert-success text-center" role="alert">
+        <strong>gratz!</strong> 商品を購入しました。
+    </div>
+    <a href="{% url 'shop:transaction' id=item.id %}" class="btn btn-warning btn-block">取引画面へ</a>
+    {% endif %}
+    <!-- ログイン中の利用者が販売者の場合、メッセージ表示、取引画面遷移ボタン表示 -->
+    {% if user == item.seller %}
+    <div class="alert alert-success text-center" role="alert">
+        <strong>gratz!</strong> あなたの商品が購入されました。
+    </div>
+    <a href="{% url 'shop:transaction' id=item.id %}" class="btn btn-warning btn-block">取引画面へ</a>
+    {% endif %}
+{% endif %}
+
+<!-- 商品画像カルーセル表示 -->
+{% if item.image1 %}
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleControls" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleControls" data-slide-to="1"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/{{ item.image1 }}" class="d-block w-100" alt="{{ item.name }}">
+            </div>
+            {% if item.image2 %}
+                <div class="carousel-item">
+                    <img src="/{{ item.image2 }}" class="d-block w-100" alt="{{ item.name }}">
+                </div>
+            {% endif %}
+            {% if item.image3 %}
+                <div class="carousel-item">
+                    <img src="/{{ item.image3 }}" class="d-block w-100" alt="{{ item.name }}">
+                </div>
+            {% endif %}
+            {% if item.image4 %}
+                <div class="carousel-item">
+                    <img src="/{{ item.image4 }}" class="d-block w-100" alt="{{ item.name }}">
+                </div>
+            {% endif %}
+            {% if item.image5 %}
+                <div class="carousel-item">
+                    <img src="/{{ item.image5 }}" class="d-block w-100" alt="{{ item.name }}">
+                </div>
+            {% endif %}
+            {% if item.image6 %}
+                <div class="carousel-item">
+                    <img src="/{{ item.image6 }}" class="d-block w-100" alt="{{ item.name }}">
+                </div>
+            {% endif %}
+            {% if item.image7 %}
+                <div class="carousel-item">
+                    <img src="/{{ item.image7 }}" class="d-block w-100" alt="{{ item.name }}">
+                </div>
+            {% endif %}
+            {% if item.image8 %}
+                <div class="carousel-item">
+                    <img src="/{{ item.image8 }}" class="d-block w-100" alt="{{ item.name }}">
+                </div>
+            {% endif %}
+            {% if item.image9 %}
+                <div class="carousel-item">
+                    <img src="/{{ item.image9 }}" class="d-block w-100" alt="{{ item.name }}">
+                </div>
+            {% endif %}
+            {% if item.image10 %}
+                <div class="carousel-item">
+                    <img src="/{{ item.image10 }}" class="d-block w-100" alt="{{ item.name }}">
+                </div>
+            {% endif %}
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">前へ</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">次へ</span>
+        </a>
+    </div>
+{% endif %}
+<h4 class="text-left">{{ item.name }}</h4>
+<h4 class="text-danger text-right">{{ item.price }}円</h4>
+<table class="table">
+    <tbody>
+        <tr>
+            <td>カテゴリー</td>
+            <td>{{ item.category }}</td>
+        </tr>
+        <tr>
+            <td>商品の状態</td>
+            <td>{{ item.status }}</td>
+        </tr>
+        <tr>
+            <td>配送料</td>
+            <td>{{ item.shippingFee }}円</td>
+        </tr>
+        <tr>
+            <td>配送料の負担</td>
+            <td>{{ item.bearShippingFee }}</td>
+        </tr>
+        <tr>
+            <td>発送方法</td>
+            <td>{{ item.shippingMethod }}</td>
+        </tr>
+        <tr>
+            <td>配送元の地域</td>
+            <td>{{ item.shipArea }}</td>
+        </tr>
+        <tr>
+            <td>発送までの日数</td>
+            <td>{{ item.shippingTime }}</td>
+        </tr>
+        <tr>
+            <td>出品者</td>
+            <td>
+                <a href="{% url 'shop:readUser' id=item.seller.id %}">{{ item.seller.name }}</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p class="text-right">最終更新日 : {{ item.lastUpdate|date:"Y/m/d" }}</p>
+<!-- 商品の出品者ID==商品の出品者IDである場合、購入ボタンを表示しない -->
+<!-- 商品の出品者ID==ログインユーザのIDであれば商品編集ボタンを表示する -->
+{% if user.is_authenticated and item.seller.id == user.id %}
+        <!-- 出品状態でない商品は商品情報の編集不可 -->
+        {% if item.transactionStatus.id == 0 %}
+            <a href="{% url 'shop:updateItem' id=item.id %}" class="btn btn-secondary btn-block">商品を編集</a>
+        {% else %}
+            <button type="button" class="btn btn-secondary btn-block" disabled>商品は購入されたため、商品方法は変更できません。</button>
+        {% endif %}
+    {% else %}
+    <!-- 出品状態がLISTINGでない場合、購入できないボタンを表示する -->
+    {% if item.listStatus.id == 0 %}
+        <a href="{% url 'shop:purchase' id=item.id %}" class="btn btn-success btn-block">購入</a>
+    {% else %}
+        <button type="button" class="btn btn-secondary btn-block" disabled>購入できません</button>
+    {% endif %}
+{% endif %}
+{% endblock content %}

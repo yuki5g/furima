@@ -1,0 +1,60 @@
+{% extends "shop/base.html" %}
+{% load bootstrap4 %}
+{% block title %}購入{% endblock title %}
+{% block content %}
+
+<h5 class="text-center">以下の商品を購入します。</h5>
+<h5 class="text-center">よろしいですか？</h5>
+
+{% if item.image1 %}
+<div class="d-flex align-items-center justify-content-center">
+    <img src="/{{ item.image1 }}" class="img-thumbnail">
+</div>
+{% endif %}
+<table class="table">
+    <tbody>
+        <tr>
+            <td>カテゴリー</td>
+            <td>{{ item.category }}</td>
+        </tr>
+        <tr>
+            <td>商品の状態</td>
+            <td>{{ item.status }}</td>
+        </tr>
+        <tr>
+            <td>配送料</td>
+            <td>{{ item.shippingFee }}円</td>
+        </tr>
+        <tr>
+            <td>配送料の負担</td>
+            <td>{{ item.bearShippingFee }}</td>
+        </tr>
+        <tr>
+            <td>発送方法</td>
+            <td>{{ item.shippingMethod }}</td>
+        </tr>
+        <tr>
+            <td>配送元の地域</td>
+            <td>{{ item.shipArea }}</td>
+        </tr>
+        <tr>
+            <td>発送までの日数</td>
+            <td>{{ item.shippingTime }}</td>
+        </tr>
+        <tr>
+            <td>出品者</td>
+            <td>
+                <a href="{% url 'shop:readUser' id=item.seller.id %}">{{ item.seller.name }}</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<h4 class="text-left">{{ item.name }}</h4>
+<h4 class="text-danger text-right">{{ item.price }}円</h4>
+
+<form action="{% url 'shop:purchaseComplete' id=item.id %}" method='post' class='form'>
+    {% csrf_token %}
+    <button type='submit' class='btn btn-danger btn-block'>購入</button>
+    <a href='#' onclick="history.back(); return false;" class='btn btn-secondary btn-block'>戻る</a>
+</form>
+{% endblock content %}

@@ -1,0 +1,18 @@
+{% extends "shop/base.html" %}
+{% load bootstrap4 %}
+{% block title %}フリマサイト | 商品情報編集{% endblock title %}
+{% block content %}
+
+
+
+<a class="btn btn-danger btn-block" href="{% url "shop:deleteItem" id=item.id%}" role="button">商品を削除する</a>
+
+
+
+<form action='{% url "shop:updateItemComplete" id=item.id%}' method='post' class='form'>
+    {% csrf_token %}
+    {% bootstrap_form form  %}
+    <button type='submit' class='btn btn-success btn-block'>更新</button>
+</form>
+<a href='#' onclick="history.back(); return false;" class='btn btn-secondary btn-block'>戻る</a>
+{% endblock content %}

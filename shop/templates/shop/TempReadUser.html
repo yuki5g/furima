@@ -1,0 +1,61 @@
+{% extends "shop/base.html" %}
+{% load bootstrap4 %}
+{% block title %}フリマサイト | {{ user.name }}さん{% endblock title %}
+{% block content %}
+
+{% if user.picture %}
+    <img src="/{{ user.picture }}" class="img-thumbnail rounded d-block mx-auto" alt="{{ user.name }}" width="200px" height="200px">
+{% else %}
+    <img src="https://1.bp.blogspot.com/-D2I7Z7-HLGU/Xlyf7OYUi8I/AAAAAAABXq4/jZ0035aDGiE5dP3WiYhlSqhhMgGy8p7zACNcBGAsYHQ/s400/no_image_square.jpg"
+        class="img-thumbnail rounded d-block mx-auto" alt="{{ user.name }}" width="200px" height="200px">
+{% endif %}
+<p class="text-center">{{ user.name }}</p>
+<h6 class="text-center">自己紹介</h6>
+<p class="text-center">{{ user.description }}</p>
+<table class="table">
+    <tbody>
+        <tr>
+            <td>利用開始日</td>
+            <td>{{ user.date_joined|date:"Y/m/d" }}</td>
+        </tr>
+        <tr>
+            <td>評価</td>
+            <td>{{ user.rate }}</td>
+        </tr>
+        <tr>
+            <td>出品した商品数</td>
+            <td>{{ user.listingCount }}</td>
+        </tr>
+        <tr>
+            <td>フォロワー</td>
+            <td>{{ user.follower }}</td>
+        </tr>
+        <tr>
+            <td>フォロー</td>
+            <td>{{ user.following }}</td>
+        </tr>
+    </tbody>
+</table>
+<p>出品した商品</p>
+<div class="items">
+    {% for item in item %}
+        <a href="{% url 'shop:readItem' id=item.id %}" class="card_link">
+            <figure>
+                {% if item.image1 %}
+                    <img src="/{{ item.image1.url }}"        
+                        alt="{{ item.name }}" 
+                        class="card_img"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        title="{{ item.name }}"
+                    >
+                {% endif %}
+                <p class="card_price">{{ item.price }}円</p>
+                {% if item.listStatus.id == 1 %}
+                    <p class="card_status">{{ item.listStatus.value }}</p>
+                {% endif %}
+            </figure>
+        </a>
+    {% endfor %}
+</div>
+{% endblock content %}

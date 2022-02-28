@@ -1,0 +1,11 @@
+{% extends "shop/base.html" %}
+{% load bootstrap4 %}
+{% block title %}フリマサイト | ユーザ情報変更{% endblock title %}
+{% block content %}
+<form action='{% url "shop:updateUserComplete"%}' method='post' class='form'>
+    {% csrf_token %}
+    {% bootstrap_form form  %}
+    <button type='submit' class='btn btn-success btn-block'>更新</button>
+    <a href='#' onclick="history.back(); return false;" class='btn btn-secondary btn-block'>戻る</a>
+</form>
+{% endblock content %}

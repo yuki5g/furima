@@ -1,0 +1,10 @@
+{% extends "shop/base.html" %}
+{% load bootstrap4 %}
+{% block title %}出品 | フリマサイト{% endblock title %}
+{% block content %}
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button type="submit" class="btn btn-success btn-block">出品する</button>
+</form>
+{% endblock content %}

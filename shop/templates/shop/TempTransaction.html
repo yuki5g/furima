@@ -1,0 +1,65 @@
+{% extends "shop/base.html" %}
+{% load bootstrap4 %}
+{% block title %}フリマサイト | 取引{% endblock title %}
+{% block content %}
+
+<!-- 取引状態が「取引開始」の場合 -->
+{% if item.transactionStatus.id == 1 %}
+    {% if user == item.seller %}
+        <a href="{% url 'shop:transactionShipped' id=item.id %}" class="btn btn-outline-danger btn-block">商品を発送する</a>
+    {% elif user == item.buyer %}
+        <div class="alert alert-success text-center" role="alert">
+            商品が発送されるのをお待ちください。
+        </div>
+    {% endif %}
+<!-- 取引状態が「発送済み」の場合 -->
+{% elif item.transactionStatus.id == 2 %}
+    {% if user == item.seller %}
+        <div class="alert alert-danger text-center" role="alert">
+            商品到着の連絡をお待ちください。
+        </div>
+    {% elif user == item.buyer %}
+        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-center">
+            <input type="checkbox" class="custom-control-input" id="customCheck2">
+            <label class="custom-control-label" for="customCheck2">商品の中身を確認しました。</label>
+        </div>
+        <a href="{% url 'shop:transactionArrived' id=item.id %}" class="btn btn-outline-danger btn-block">受け取り完了する</a>
+    {% endif %}
+<!-- 取引状態が「受け取り完了(取引終了)」の場合 -->
+<!-- 冗長処理があるが、今後の改修のためこのまま -->
+{% elif item.transactionStatus.id == 3 %}
+    {% if user == item.seller %}
+        <div class="alert alert-warning text-center" role="alert">
+            この取引は完了しました。
+        </div>
+    {% elif user == item.buyer %}
+        <div class="alert alert-warning text-center" role="alert">
+            この取引は完了しました。
+        </div>
+{% endif %}
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock content %}

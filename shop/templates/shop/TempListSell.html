@@ -1,0 +1,43 @@
+{% extends "shop/base.html" %}
+{% block title %}フリマサイト | 出品リスト{% endblock title %}
+{% load bootstrap4 %}
+{% block content %}
+
+<h5 class="text-center">出品リスト</h5>
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>画像</th>
+        <th>商品名</th>
+        <th>金額</th>
+        <th>状態</th>        
+        <th>編集</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for item in object_list %}
+        <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>
+            <a href="{% url 'shop:readItem' id=item.id%}">
+                <img src="/{{ item.image1 }}"
+                data-toggle="tooltip"
+                title="{{ item.name }}"
+                width="100px">
+            </a>
+        </td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.price }} 円</td>
+        <td>{{ item.transactionStatus }}</td>
+        <!-- 出品状態でない商品は商品情報の編集不可 -->
+        {% if item.transactionStatus.id == 0 %}
+            <td><a href="{% url 'shop:updateItem' id=item.id %}" class="btn btn-outline-warning">編集</a></td>
+        {% else %}
+            <td><button type="button" class="btn btn-outline-warning" disabled>編集</button></td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

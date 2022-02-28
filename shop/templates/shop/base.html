@@ -1,0 +1,126 @@
+{% load i18n static %}
+{% load bootstrap4 %}
+<!DOCTYPE html>{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!---------------------------------------->
+<!---------------------------------------->
+<!--                CSS                 -->
+<!---------------------------------------->
+<!---------------------------------------->
+<link rel="stylesheet" href="{% static 'shop/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'shop/css/cardDesign.css' %}">
+<!-- AvantUI -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous"
+>
+<link rel="stylesheet" href="{% static 'shop/css/avantui.css' %}">
+<!-- Sticky footer -->
+<link href="{% static 'shop/css/sticky-footer.css' %}" rel="stylesheet">
+
+<!---------------------------------------->
+<!---------------------------------------->
+<!--             JavaScript             -->
+<!---------------------------------------->
+<!---------------------------------------->
+<!-- SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<!-- jQuery -->
+<script src="{% static 'shop/js/jquery-3.6.0.min.js' %}"></script>
+<!-- ToolTips -->
+<script src="{% static 'shop/js/tooltips.js' %}"></script>
+
+{% block extra_css %}
+{% endblock %}
+<title>{% block title %}フリマサイト{% endblock %}</title>
+</head>
+<body>
+	<!-- ナビゲーションバー -->
+    <nav class="navbar navbar-expand-lg bg-gradient-red">
+        <div class="col-2">
+            <a class="navbar-brand text-white" href="{% url 'shop:top' %}">
+                フリマサイト
+      		</a>
+      		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarDark" aria-controls="navbarDark" aria-expanded="false" aria-label="Toggle navigation">
+        		<span class="navbar-toggler-icon"></span>
+      		</button>
+    	</div>
+
+		<div class="col-5">
+			<form action="{% url 'shop:top' %}" class="form-inline">
+				<input name="query" value="{{ request.GET.query }}" class="form-control mr-sm-2" type="text" placeholder="商品を検索！">
+				<button class="btn btn-primary my-2 my-sm-0" type="submit">検索</button>
+			</form>
+		</div>
+
+		<div class="collapse navbar-collapse" id="navbarDark">
+			<ul class="navbar-nav ml-auto">
+				{% if user.is_authenticated %}
+					<p class="text-white d-flex align-items-center justify-content-center">{{user.name}}さん こんにちは</p>
+					<li class="nav-item active">
+						<a class="nav-link text-white" href="{% url 'logout' %}">ログアウト</a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link text-white" href="{% url 'shop:createItem' %}">出品</a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link text-white" href="{% url 'shop:mypage' %}">マイページ</a>
+					</li>
+				{% else %}
+					<li class="nav-item active">
+						<a class="nav-link text-white" href="{% url 'shop:login' %}">ログイン</a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link text-white" href="{% url 'shop:createUser' %}">登録</a>
+					</li>
+				{% endif %}
+			</ul>
+		</div>
+	</nav>
+	<main>
+    	<div class="container">
+		<!-- メッセージアラート -->
+			{% if messages %}
+			{% for message in messages %}
+			<div class="alert{% if message.tags %} alert-{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+			<span class="alert-icon"><i class="fas fa-check"></i></span>
+			<span class="alert-text text-center">{{ message }}</span>
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&#10005;</span>
+			</button>
+			</div>
+			{% endfor %}
+			{% endif %}		
+			<!-- コンテンツ -->
+			{% block content %}
+			{{ content }}
+			{% endblock %}		
+		</div>
+	</main>
+{% block extra_js %}
+{% endblock %}
+<!-- フッター -->
+<footer class="footer bg-gradient-red">
+  <div class="footer-container">
+    <p class="text-white">© 2022 フリマサイト</p>
+  </div>
+</footer>
+<!---------------------------------------->
+<!---------------------------------------->
+<!--             JavaScript             -->
+<!---------------------------------------->
+<!---------------------------------------->
+<!-- jQuery -->
+<script src="{% static 'shop/js/jquery-3.6.0.min.js' %}"></script>
+<!-- bootstrap -->
+<script src="{% static 'shop/js/bootstrap.bundle.min.js' %}"></script>
+<!-- AvantUI -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+<script src="{% static 'shop/js/avantui.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+{% extends "shop/base.html" %}
+{% load bootstrap4 %}
+{% block title %}フリマサイト | ログアウトしました{% endblock title %}
+{% block content %}
+<p>ログアウトしました</p>
+<a href="{% url 'shop:top' %}" class="btn btn-secondary btn-block">トップページ</a>
+<a href="{% url 'shop:login' %}" class="btn btn-success btn-block">ログイン</a>
+{% endblock content %}

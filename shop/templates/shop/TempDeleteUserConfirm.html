@@ -1,0 +1,8 @@
+{% extends "shop/base.html" %}
+{% block title %}フリマサイト | アカウント削除{% endblock title %}
+{% load bootstrap4 %}
+{% block content %}
+    <p>アカウントを削除します。よろしいですか?</p>
+    <a class="btn btn-success btn-block" href="{% url 'shop:top' %}">やっぱりやめる</a>
+    <a class="btn btn-danger btn-block" href="{% url 'shop:deleteUserComplete' %}">アカウントを削除する</a>
+{% endblock %}

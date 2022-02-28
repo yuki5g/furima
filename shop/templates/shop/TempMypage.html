@@ -1,0 +1,54 @@
+{% extends "shop/base.html" %}
+{% load bootstrap4 %}
+{% block title %}フリマサイト | マイページ{% endblock title %}
+{% block content %}
+<!-- 利用者情報変更ドロップダウンメニュー -->
+<div class="dropdown">
+    <button class="btn bg-secondary text-white dropdown-toggle"
+            type="button" id="dropdownMenu1" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+        ユーザ情報修正
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <a class="dropdown-item" href="{% url 'shop:updateUser' %}">プロフィールの編集</a>
+        <a class="dropdown-item" href="{% url 'shop:passwordChange' %}">パスワードの変更</a>
+        <a class="dropdown-item" href="{% url 'shop:deleteUserConfirm' %}">退会</a>
+    </div>
+</div>
+
+<a href="{% url 'shop:favoriteList' %}" class="btn btn-outline-dribble btn-block">いいね一覧(未実装)</a>
+<a href="{% url 'shop:sellList' %}" class="btn btn-outline-success btn-block">出品した商品</a>
+<a href="{% url 'shop:buyList' %}" class="btn btn-outline-warning btn-block">購入した商品</a>
+
+<!-- 利用者情報表示部分 -->
+<div class="d-flex align-items-center justify-content-center">
+    <img src="/{{ user.picture }}"
+    class="img-thumbnail rounded d-block mx-auto"
+    alt="{{ user.name }}"
+    width="200px"
+    height="200px"
+    data-toggle="tooltip"
+    title="{{ user.name }}">
+</div>
+
+<table class="table borderless">
+    <tbody>
+        <tr>
+            <th scope="row">ユーザ名</th>
+            <td>{{ user.name }}</td>
+        </tr>
+        <tr>
+            <th scope="row">自己紹介</th>
+            <td>{{ user.description }}</td>
+        </tr>
+        <tr>
+            <th scope="row">E-mail</th>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <th scope="row">登録日</th>
+            <td>{{ user.date_joined|date:"Y/m/d" }}</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

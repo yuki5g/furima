@@ -1,0 +1,38 @@
+{% extends "shop/base.html" %}
+{% block title %}フリマサイト | 購入リスト{% endblock title %}
+{% load bootstrap4 %}
+{% block content %}
+
+<h5 class="text-center">購入リスト</h5>
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>画像</th>
+        <th>商品名</th>
+        <th>金額</th>
+        <th>状態</th>
+        <th>取引</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for item in object_list %}
+        <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>
+            <a href="{% url 'shop:readItem' id=item.id %}">
+                <img src="/{{ item.image1 }}"
+                data-toggle="tooltip"
+                title="{{ item.name }}"
+                width="100px">
+            </a>
+        </td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.price }} 円</td>
+        <td>{{ item.transactionStatus }}</td>
+        <td><a href="{% url 'shop:transaction' id=item.id %}" class="btn btn-outline-danger">取引ページへ</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
