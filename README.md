@@ -1,8 +1,7 @@
 # furima(Python DjangoでのECサイト作成)
 
 # デモ
-
-
+https://user-images.githubusercontent.com/42097873/155931773-8f3bd8a5-1746-419d-b91b-95bd253a3605.mp4
 
 # 特徴・機能
 基本的にメルカリ・ヤフオクなどのECサイトを模写した作りになっています。  
